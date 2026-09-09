@@ -10,7 +10,7 @@ fs.mkdirSync(out, {recursive:true});
 fs.cpSync(path.join(SRC,'assets'), path.join(out,'assets'), {recursive:true, force:true});
 
 // ---- drip schedule ----
-const LAUNCH = process.env.LAUNCH_DATE || '2026-09-10';
+const LAUNCH = process.env.LAUNCH_DATE || '2026-09-09';
 const TODAY  = process.env.BUILD_DATE  || new Date().toISOString().slice(0,10);
 function addDays(iso,n){ const d=new Date(iso+'T00:00:00Z'); d.setUTCDate(d.getUTCDate()+n); return d.toISOString().slice(0,10); }
 
@@ -81,59 +81,59 @@ const I = {
 // ---------- 50 zip-code service areas ----------
 const AREAS = [
   // Central KC
-  {n:'Downtown',z:'64101',area:'Downtown / River Market',d:'Emergency Water Extraction',zone:'central',feat:'the Missouri River waterfront'},
-  {n:'Quality Hill',z:'64102',area:'Downtown / Quality Hill',d:'Burst Pipe Water Damage Repair',zone:'central',feat:'the West Bottoms and Penn Valley area'},
-  {n:'City Market',z:'64105',area:'Downtown / City Market',d:'Flooded Basement Cleanup',zone:'central',feat:'the City Market and Missouri River area'},
-  {n:'Columbus Park',z:'64106',area:'Columbus Park / Northeast',d:'Storm &amp; Flood Damage Restoration',zone:'central',feat:'the Missouri River and Independence Ave corridor'},
-  {n:'Midtown',z:'64108',area:'Midtown / Crown Center',d:'Emergency Water Extraction',zone:'central',feat:'the Hospital Hill and Crown Center area'},
-  {n:'Westport',z:'64109',area:'Westport / Hyde Park',d:'Mold Remediation',zone:'central',feat:'Brush Creek and the Westport corridor'},
-  {n:'Brookside North',z:'64110',area:'Rockhill / UMKC / Brookside North',d:'Ceiling Water Damage Repair',zone:'central',feat:'Brush Creek and the UMKC campus area'},
-  {n:'Valentine',z:'64111',area:'Westport / Valentine / Roanoke',d:'Burst Pipe Water Damage Repair',zone:'central',feat:'the Roanoke neighborhood and Westport area'},
-  {n:'Country Club Plaza',z:'64112',area:'Country Club Plaza / Brookside',d:'Flooded Basement Cleanup',zone:'central',feat:'Brush Creek and the Country Club Plaza'},
+  {n:'Downtown',z:'64101',area:'Downtown / River Market',d:'Emergency Water Extraction',zone:'central',feat:'the Missouri River waterfront',lm:'River Market, City Hall, Power & Light District, Berkley Riverfront',housing:'a mix of converted loft condos, historic brick buildings, and newer high-rise apartments'},
+  {n:'Quality Hill',z:'64102',area:'Downtown / Quality Hill',d:'Burst Pipe Water Damage Repair',zone:'central',feat:'the West Bottoms and Penn Valley area',lm:'Penn Valley Park, Liberty Memorial, the West Bottoms entertainment district',housing:'historic brownstones, early 1900s apartment buildings, and renovated row homes with aging copper and galvanized plumbing'},
+  {n:'City Market',z:'64105',area:'Downtown / City Market',d:'Flooded Basement Cleanup',zone:'central',feat:'the City Market and Missouri River area',lm:'Kansas City City Market, Steamboat Arabia Museum, the River Market neighborhood',housing:'converted warehouse lofts and older multi-family buildings, many with below-grade units near the Missouri River floodplain'},
+  {n:'Columbus Park',z:'64106',area:'Columbus Park / Northeast',d:'Storm &amp; Flood Damage Restoration',zone:'central',feat:'the Missouri River and Independence Ave corridor',lm:'Columbus Park, Independence Avenue, the Northeast Arts District',housing:'post-war bungalows and older single-family homes, many built on sloped terrain that channels storm runoff toward foundations'},
+  {n:'Midtown',z:'64108',area:'Midtown / Crown Center',d:'Emergency Water Extraction',zone:'central',feat:'the Hospital Hill and Crown Center area',lm:'Crown Center, Union Station, Hospital Hill medical campus, the Crossroads Arts District',housing:'a wide range from early 1900s Craftsmans to mid-century apartments, with Truman Medical Center and the Hallmark headquarters anchoring the area'},
+  {n:'Westport',z:'64109',area:'Westport / Hyde Park',d:'Mold Remediation',zone:'central',feat:'Brush Creek and the Westport corridor',lm:'Westport entertainment district, Loose Park, Hyde Park neighborhood',housing:'1920s–1940s bungalows and Tudor-style homes near Brush Creek, where flooding history has left many properties with hidden moisture behind plaster walls'},
+  {n:'Brookside North',z:'64110',area:'Rockhill / UMKC / Brookside North',d:'Ceiling Water Damage Repair',zone:'central',feat:'Brush Creek and the UMKC campus area',lm:'UMKC campus, Nelson-Atkins Museum of Art, the Brookside shops',housing:'1920s–1950s homes, many with original plaster ceilings and aging roof structures that make upstairs leaks and ceiling damage a recurring issue'},
+  {n:'Valentine',z:'64111',area:'Westport / Valentine / Roanoke',d:'Burst Pipe Water Damage Repair',zone:'central',feat:'the Roanoke neighborhood and Westport area',lm:'Roanoke Park, the Valentine neighborhood, Mill Creek Park',housing:'century-old homes with original cast-iron and galvanized plumbing that is highly susceptible to bursting in Kansas City winters'},
+  {n:'Country Club Plaza',z:'64112',area:'Country Club Plaza / Brookside',d:'Flooded Basement Cleanup',zone:'central',feat:'Brush Creek and the Country Club Plaza',lm:'Country Club Plaza, Brush Creek, the Brookside neighborhood, Ward Parkway',housing:'upscale homes from the 1920s–1960s along Brush Creek, where major flood events in 1977 and 1998 demonstrated the area vulnerability to rapid basement flooding'},
   // South KC
-  {n:'Waldo',z:'64113',area:'Waldo / Ward Parkway',d:'Mold Remediation',zone:'south',feat:'the Ward Parkway corridor and Indian Creek'},
-  {n:'Leawood Acres',z:'64114',area:'Leawood Acres / Hickman Mills North',d:'Storm &amp; Flood Damage Restoration',zone:'south',feat:'the Indian Creek and Blue River watershed'},
-  {n:'Gregory Ridge',z:'64131',area:'Raytown West / Gregory Ridge',d:'Flooded Basement Cleanup',zone:'south',feat:'the Blue River area'},
-  {n:'Ruskin Heights',z:'64132',area:'Ruskin Heights / South Blue Ridge',d:'Storm &amp; Flood Damage Restoration',zone:'south',feat:'the Blue River and Little Blue River area'},
-  {n:'Hickman Mills',z:'64134',area:'Hickman Mills / Grandview North',d:'Flooded Basement Cleanup',zone:'south',feat:'the Little Blue River and Longview Lake area'},
-  {n:'Longview',z:'64137',area:'Longview / Grandview Terrace',d:'Sewage Backup Cleanup',zone:'south',feat:'the Longview Lake and Little Blue River area'},
-  {n:'Raytown South',z:'64138',area:'Raytown South / Bannister',d:'Mold Remediation',zone:'south',feat:'the Bannister area and Blue River watershed'},
-  {n:'Lake City',z:'64139',area:'Lake City / Richards-Gebaur',d:'Storm &amp; Flood Damage Restoration',zone:'south',feat:'the former Richards-Gebaur area and surrounding creeks'},
-  {n:'Holmes Park',z:'64145',area:'Holmes Park / South KC',d:'Burst Pipe Water Damage Repair',zone:'south',feat:'the Indian Creek watershed'},
-  {n:'Martin City',z:'64146',area:'Martin City / South KC',d:'Flooded Basement Cleanup',zone:'south',feat:'the Blue River and Indian Creek confluence area'},
-  {n:'South Kansas City',z:'64147',area:'Belton North / South KC',d:'Storm &amp; Flood Damage Restoration',zone:'south',feat:'the South KC corridor near Belton'},
+  {n:'Waldo',z:'64113',area:'Waldo / Ward Parkway',d:'Mold Remediation',zone:'south',feat:'the Ward Parkway corridor and Indian Creek',lm:'Waldo commercial district, Ward Parkway Shopping Center, Indian Creek Trail',housing:'post-war ranch homes and Cape Cods with finished basements, where Indian Creek proximity creates persistent moisture issues and hidden mold behind drywall'},
+  {n:'Leawood Acres',z:'64114',area:'Leawood Acres / Hickman Mills North',d:'Storm &amp; Flood Damage Restoration',zone:'south',feat:'the Indian Creek and Blue River watershed',lm:'Indian Creek Greenway, Blue River, Leawood Acres neighborhood',housing:'1960s–1980s split-levels and ranch homes in the Indian Creek and Blue River watershed, exposed to flash flooding from severe Midwest thunderstorms'},
+  {n:'Gregory Ridge',z:'64131',area:'Raytown West / Gregory Ridge',d:'Flooded Basement Cleanup',zone:'south',feat:'the Blue River area',lm:'Blue River, Raytown city limits, Gregory Boulevard corridor',housing:'1950s–1970s ranch homes and bi-levels near the Blue River, where heavy rain drives groundwater into older basements through cracked foundations'},
+  {n:'Ruskin Heights',z:'64132',area:'Ruskin Heights / South Blue Ridge',d:'Storm &amp; Flood Damage Restoration',zone:'south',feat:'the Blue River and Little Blue River area',lm:'Ruskin Heights neighborhood, Blue Ridge Boulevard, Little Blue River',housing:'post-war subdivision homes rebuilt after the devastating 1957 Ruskin Heights tornado, sitting between two flood-prone rivers'},
+  {n:'Hickman Mills',z:'64134',area:'Hickman Mills / Grandview North',d:'Flooded Basement Cleanup',zone:'south',feat:'the Little Blue River and Longview Lake area',lm:'Longview Lake, Hickman Mills neighborhood, Center High School area',housing:'1960s–1980s ranch and split-level homes near the Little Blue River, where aging sump pumps and clay soil create repeat basement flooding'},
+  {n:'Longview',z:'64137',area:'Longview / Grandview Terrace',d:'Sewage Backup Cleanup',zone:'south',feat:'the Longview Lake and Little Blue River area',lm:'Longview Lake, Longview Community College area, View High Drive',housing:'suburban homes from the 1970s–1990s served by aging sewer infrastructure that backs up during heavy rain events'},
+  {n:'Raytown South',z:'64138',area:'Raytown South / Bannister',d:'Mold Remediation',zone:'south',feat:'the Bannister area and Blue River watershed',lm:'Bannister Mall area, Raytown city limits, Blue River industrial corridor',housing:'1960s–1980s homes near the Blue River watershed, where recurring moisture from poor drainage fuels persistent mold growth in finished basements'},
+  {n:'Lake City',z:'64139',area:'Lake City / Richards-Gebaur',d:'Storm &amp; Flood Damage Restoration',zone:'south',feat:'the former Richards-Gebaur area and surrounding creeks',lm:'former Richards-Gebaur Air Force Base, Lake City Army Ammunition Plant area',housing:'spread-out suburban homes and rural properties exposed to open-terrain wind and hail damage from Midwest supercell storms'},
+  {n:'Holmes Park',z:'64145',area:'Holmes Park / South KC',d:'Burst Pipe Water Damage Repair',zone:'south',feat:'the Indian Creek watershed',lm:'Holmes Park, Indian Creek, Red Bridge Shopping area',housing:'1950s–1970s homes with original copper and galvanized plumbing prone to winter pipe bursts, especially in uninsulated crawl spaces'},
+  {n:'Martin City',z:'64146',area:'Martin City / South KC',d:'Flooded Basement Cleanup',zone:'south',feat:'the Blue River and Indian Creek confluence area',lm:'Martin City neighborhood, Blue River confluence, Line Creek Trail',housing:'homes near where Blue River meets Indian Creek — a flood-prone confluence that sends water into basements during major rain events'},
+  {n:'South Kansas City',z:'64147',area:'Belton North / South KC',d:'Storm &amp; Flood Damage Restoration',zone:'south',feat:'the South KC corridor near Belton',lm:'South KC border, Belton corridor, I-49 gateway',housing:'suburban ranch homes and newer developments on the metro edge, where storm damage from wind-driven rain and hail is the most common water emergency'},
   // East KC
-  {n:'Sheffield',z:'64120',area:'Sheffield / Industrial',d:'Emergency Water Extraction',zone:'east',feat:'the Missouri River industrial corridor'},
-  {n:'Independence Ave East',z:'64123',area:'Independence Ave East / Lykins',d:'Burst Pipe Water Damage Repair',zone:'east',feat:'the Independence Ave corridor and Kensington area'},
-  {n:'Northeast KC',z:'64124',area:'Independence Ave / Northeast KC',d:'Flooded Basement Cleanup',zone:'east',feat:'the Missouri River and Independence Ave area'},
-  {n:'Eastwood Hills',z:'64125',area:'Sheffield / Eastwood Hills',d:'Storm &amp; Flood Damage Restoration',zone:'east',feat:'the Blue River and Missouri River confluence'},
-  {n:'Leeds',z:'64126',area:'Blue River / Leeds',d:'Flooded Basement Cleanup',zone:'east',feat:'the Blue River corridor'},
-  {n:'Prospect',z:'64127',area:'Prospect / Indiana / Ivanhoe',d:'Emergency Water Extraction',zone:'east',feat:'the Prospect Ave corridor and Paseo area'},
-  {n:'Blue Hills',z:'64128',area:'Blue Hills / South Prospect',d:'Mold Remediation',zone:'east',feat:'the Blue Hills and Swope Park area'},
-  {n:'Swope Park',z:'64129',area:'Swope Park / Marlborough Heights',d:'Storm &amp; Flood Damage Restoration',zone:'east',feat:'Swope Park and the Blue River'},
-  {n:'Key Coalition',z:'64130',area:'Swope Parkway / Key Coalition',d:'Ceiling Water Damage Repair',zone:'east',feat:'the Swope Parkway and Paseo corridor'},
-  {n:'Blue Ridge',z:'64133',area:'Englewood / Blue Ridge',d:'Flooded Basement Cleanup',zone:'east',feat:'the Blue Ridge area and Little Blue River'},
-  {n:'Fairmount',z:'64136',area:'Fairmount / Little Blue',d:'Storm &amp; Flood Damage Restoration',zone:'east',feat:'the Little Blue River area'},
-  {n:'Tiffany Springs',z:'64149',area:'Tiffany Springs / KCI Area',d:'Structural Drying &amp; Dehumidification',zone:'east',feat:'the Tiffany Springs and Platte Purchase area'},
+  {n:'Sheffield',z:'64120',area:'Sheffield / Industrial',d:'Emergency Water Extraction',zone:'east',feat:'the Missouri River industrial corridor',lm:'Sheffield industrial district, Missouri River levees, Fairfax Industrial District',housing:'mixed industrial and residential properties along the Missouri River corridor, where levee overtopping and industrial water events require fast extraction'},
+  {n:'Independence Ave East',z:'64123',area:'Independence Ave East / Lykins',d:'Burst Pipe Water Damage Repair',zone:'east',feat:'the Independence Ave corridor and Kensington area',lm:'Independence Avenue, Kensington neighborhood, Lykins Square Park',housing:'turn-of-the-century homes with some of the oldest plumbing in the metro — cast iron and lead pipes that burst under pressure or freeze quickly'},
+  {n:'Northeast KC',z:'64124',area:'Independence Ave / Northeast KC',d:'Flooded Basement Cleanup',zone:'east',feat:'the Missouri River and Independence Ave area',lm:'Independence Ave business corridor, Pendleton Heights, Sheffield neighborhood edge',housing:'pre-war homes built on slopes above the Missouri River, where storm runoff pools in basements and crawl spaces during heavy rain'},
+  {n:'Eastwood Hills',z:'64125',area:'Sheffield / Eastwood Hills',d:'Storm &amp; Flood Damage Restoration',zone:'east',feat:'the Blue River and Missouri River confluence',lm:'Blue River and Missouri River confluence, Eastwood Hills neighborhood',housing:'homes near the most flood-active river junction in the metro, where the 1977 and 1993 floods caused catastrophic property damage'},
+  {n:'Leeds',z:'64126',area:'Blue River / Leeds',d:'Flooded Basement Cleanup',zone:'east',feat:'the Blue River corridor',lm:'Leeds neighborhood, Blue River Road, Swope Park east edge',housing:'homes along the Blue River corridor, which is one of the most flood-prone waterways in the Kansas City metro according to FEMA flood maps'},
+  {n:'Prospect',z:'64127',area:'Prospect / Indiana / Ivanhoe',d:'Emergency Water Extraction',zone:'east',feat:'the Prospect Ave corridor and Paseo area',lm:'Prospect Avenue, The Paseo, Ivanhoe neighborhood, Research Medical Center',housing:'early 1900s homes with aging plumbing and flat-roof multifamily buildings where roof leaks and burst pipes cause rapid water intrusion'},
+  {n:'Blue Hills',z:'64128',area:'Blue Hills / South Prospect',d:'Mold Remediation',zone:'east',feat:'the Blue Hills and Swope Park area',lm:'Blue Hills neighborhood, Swope Park edge, 63rd Street corridor',housing:'1930s–1950s homes near Swope Park, where tree canopy shade and poor ventilation create high-humidity conditions that drive mold in basements and crawl spaces'},
+  {n:'Swope Park',z:'64129',area:'Swope Park / Marlborough Heights',d:'Storm &amp; Flood Damage Restoration',zone:'east',feat:'Swope Park and the Blue River',lm:'Swope Park, Kansas City Zoo, Starlight Theatre, Blue River',housing:'homes near the 1,805-acre Swope Park and the Blue River, exposed to severe storm damage from the open terrain and river flooding'},
+  {n:'Key Coalition',z:'64130',area:'Swope Parkway / Key Coalition',d:'Ceiling Water Damage Repair',zone:'east',feat:'the Swope Parkway and Paseo corridor',lm:'Swope Parkway, The Paseo boulevard, Research Hospital area',housing:'1920s–1940s homes with aging flat and low-pitch roofs, where ice dams and roof deterioration cause leaks that appear as ceiling stains and sagging drywall'},
+  {n:'Blue Ridge',z:'64133',area:'Englewood / Blue Ridge',d:'Flooded Basement Cleanup',zone:'east',feat:'the Blue Ridge area and Little Blue River',lm:'Blue Ridge Boulevard, Blue Ridge Mall area, Little Blue River',housing:'1960s–1980s suburban homes near the Little Blue River, where sump pump failures and groundwater seepage cause recurring basement floods'},
+  {n:'Fairmount',z:'64136',area:'Fairmount / Little Blue',d:'Storm &amp; Flood Damage Restoration',zone:'east',feat:'the Little Blue River area',lm:'Fairmount neighborhood, Little Blue River, Fairmount Park',housing:'suburban homes in the Little Blue River floodplain, where severe storms send flash floods through the watershed fast'},
+  {n:'Tiffany Springs',z:'64149',area:'Tiffany Springs / KCI Area',d:'Structural Drying &amp; Dehumidification',zone:'east',feat:'the Tiffany Springs and Platte Purchase area',lm:'Tiffany Springs Parkway, KCI Expo Center area, Zona Rosa nearby',housing:'newer 1990s–2000s construction with modern materials that still trap moisture behind vapor barriers, requiring professional monitoring and structural drying'},
   // North KC
-  {n:'North Kansas City',z:'64116',area:'North Kansas City / Harlem',d:'Flooded Basement Cleanup',zone:'north',feat:'the Missouri River north bank'},
-  {n:'Claycomo',z:'64117',area:'Claycomo / Randolph',d:'Storm &amp; Flood Damage Restoration',zone:'north',feat:'the Missouri River and Fishing River area'},
-  {n:'Gladstone',z:'64118',area:'Gladstone / Pleasant Valley',d:'Flooded Basement Cleanup',zone:'north',feat:'the Shoal Creek and Happy Rock Park area'},
-  {n:'Liberty West',z:'64119',area:'Liberty West / Nashua',d:'Mold Remediation',zone:'north',feat:'the Liberty area and Rush Creek'},
-  {n:'Platte Woods',z:'64151',area:'Platte Woods / Weatherby Lake',d:'Storm &amp; Flood Damage Restoration',zone:'north',feat:'Weatherby Lake and the Platte River area'},
-  {n:'Riverside West',z:'64152',area:'Platte City South / Riverside West',d:'Flooded Basement Cleanup',zone:'north',feat:'the Platte River and Missouri River area'},
-  {n:'KCI Airport',z:'64153',area:'KCI Airport / Tiffany Springs',d:'Emergency Water Extraction',zone:'north',feat:'the KCI Airport area and Platte Purchase'},
-  {n:'Zona Rosa',z:'64154',area:'Shoal Creek / Zona Rosa North',d:'Burst Pipe Water Damage Repair',zone:'north',feat:'the Shoal Creek watershed'},
-  {n:'Shoal Creek',z:'64155',area:'Liberty South / Shoal Creek',d:'Flooded Basement Cleanup',zone:'north',feat:'the Shoal Creek and Liberty corridor'},
-  {n:'Liberty North',z:'64156',area:'Liberty West / Kearney South',d:'Storm &amp; Flood Damage Restoration',zone:'north',feat:'the northern Liberty and Kearney area'},
-  {n:'Clayview',z:'64157',area:'Liberty East / Clayview',d:'Mold Remediation',zone:'north',feat:'the eastern Liberty area and Clayview'},
-  {n:'Pleasant Valley',z:'64158',area:'Liberty North / Pleasant Valley North',d:'Ceiling Water Damage Repair',zone:'north',feat:'the Pleasant Valley and Shoal Creek area'},
-  {n:'Sugar Creek',z:'64161',area:'Sugar Creek / Courtney',d:'Flooded Basement Cleanup',zone:'north',feat:'the Missouri River and Sugar Creek area'},
-  {n:'Platte City',z:'64163',area:'Platte City / KCI West',d:'Storm &amp; Flood Damage Restoration',zone:'north',feat:'the Platte River and KCI industrial area'},
-  {n:'KCI Industrial',z:'64164',area:'Platte City East / KCI Industrial',d:'Emergency Water Extraction',zone:'north',feat:'the KCI logistics corridor'},
-  {n:'North Platte',z:'64165',area:'North Platte / Dearborn South',d:'Storm &amp; Flood Damage Restoration',zone:'north',feat:'the Platte River valley'},
-  {n:'Ridgely',z:'64166',area:'Platte North / Ridgely',d:'Mold Remediation',zone:'north',feat:'the northern Platte County area'},
-  {n:'Kearney South',z:'64167',area:'Kearney South / Holt',d:'Storm &amp; Flood Damage Restoration',zone:'north',feat:'the southern Kearney and Holt area'},
+  {n:'North Kansas City',z:'64116',area:'North Kansas City / Harlem',d:'Flooded Basement Cleanup',zone:'north',feat:'the Missouri River north bank',lm:'North Kansas City downtown, Macken Park, Harlem neighborhood, NKC Hospital',housing:'early-to-mid 1900s homes just north of the Missouri River, where river-level groundwater seeps into basements during high-water events'},
+  {n:'Claycomo',z:'64117',area:'Claycomo / Randolph',d:'Storm &amp; Flood Damage Restoration',zone:'north',feat:'the Missouri River and Fishing River area',lm:'Ford Claycomo Assembly Plant, Claycomo downtown, Missouri River bluffs',housing:'post-war working-class homes near the Ford plant, exposed to Missouri River bluff runoff and severe Northland storm damage'},
+  {n:'Gladstone',z:'64118',area:'Gladstone / Pleasant Valley',d:'Flooded Basement Cleanup',zone:'north',feat:'the Shoal Creek and Happy Rock Park area',lm:'Happy Rock Park, Oak Grove Park, Gladstone Community Center, Antioch Mall area',housing:'1960s–1980s ranch homes and split-levels with finished basements, where Shoal Creek flooding and clay soil combine to create chronic basement water intrusion'},
+  {n:'Liberty West',z:'64119',area:'Liberty West / Nashua',d:'Mold Remediation',zone:'north',feat:'the Liberty area and Rush Creek',lm:'Liberty downtown square, William Jewell College area, Rush Creek',housing:'a mix of historic Liberty homes and newer developments, where Rush Creek moisture and poorly ventilated crawl spaces drive hidden mold growth'},
+  {n:'Platte Woods',z:'64151',area:'Platte Woods / Weatherby Lake',d:'Storm &amp; Flood Damage Restoration',zone:'north',feat:'Weatherby Lake and the Platte River area',lm:'Weatherby Lake, Platte Woods village, Tiffany Springs area',housing:'lakefront and wooded-lot homes near Weatherby Lake, exposed to high winds and storm-driven rain through mature tree canopy'},
+  {n:'Riverside West',z:'64152',area:'Platte City South / Riverside West',d:'Flooded Basement Cleanup',zone:'north',feat:'the Platte River and Missouri River area',lm:'Riverside Red X, Platte Landing Park, Argosy Casino area',housing:'homes between the Platte and Missouri Rivers — two major flood sources that threaten basements during high-water events'},
+  {n:'KCI Airport',z:'64153',area:'KCI Airport / Tiffany Springs',d:'Emergency Water Extraction',zone:'north',feat:'the KCI Airport area and Platte Purchase',lm:'Kansas City International Airport (KCI), KCI Expo Center, Platte Purchase area',housing:'commercial properties and newer residential near the airport, where large flat-roof buildings and fast development create unique water intrusion risks'},
+  {n:'Zona Rosa',z:'64154',area:'Shoal Creek / Zona Rosa North',d:'Burst Pipe Water Damage Repair',zone:'north',feat:'the Shoal Creek watershed',lm:'Zona Rosa shopping district, Shoal Creek Living History Museum, I-29 corridor',housing:'newer 2000s–2010s subdivision homes with PEX and CPVC plumbing that, while modern, can still burst at connection fittings during deep freezes'},
+  {n:'Shoal Creek',z:'64155',area:'Liberty South / Shoal Creek',d:'Flooded Basement Cleanup',zone:'north',feat:'the Shoal Creek and Liberty corridor',lm:'Shoal Creek Parkway, Shoal Creek golf course, Liberty South corridor',housing:'newer suburban developments along Shoal Creek, where rapid watershed runoff during storms overwhelms French drains and sump systems'},
+  {n:'Liberty North',z:'64156',area:'Liberty West / Kearney South',d:'Storm &amp; Flood Damage Restoration',zone:'north',feat:'the northern Liberty and Kearney area',lm:'Liberty North High School area, I-35 corridor, Kearney gateway',housing:'growing suburban communities on the metro edge, where new construction sits in open terrain vulnerable to severe Midwest storms and tornado-path winds'},
+  {n:'Clayview',z:'64157',area:'Liberty East / Clayview',d:'Mold Remediation',zone:'north',feat:'the eastern Liberty area and Clayview',lm:'Clayview neighborhood, Liberty East corridor, Hwy 291 area',housing:'1980s–2000s homes in a humid, wooded area where poor air circulation and crawl space moisture drive persistent mold problems'},
+  {n:'Pleasant Valley',z:'64158',area:'Liberty North / Pleasant Valley North',d:'Ceiling Water Damage Repair',zone:'north',feat:'the Pleasant Valley and Shoal Creek area',lm:'Pleasant Valley city, Shoal Creek corridor, Liberty Hospital area',housing:'1970s–1990s homes where aging roof materials and ice dam buildup cause leaks that damage ceilings and upper-floor walls'},
+  {n:'Sugar Creek',z:'64161',area:'Sugar Creek / Courtney',d:'Flooded Basement Cleanup',zone:'north',feat:'the Missouri River and Sugar Creek area',lm:'Sugar Creek city, Courtney-Atherton area, Missouri River bottoms',housing:'older homes in the Missouri River bottomlands, where flooding risk is among the highest in the metro and basements are chronically vulnerable'},
+  {n:'Platte City',z:'64163',area:'Platte City / KCI West',d:'Storm &amp; Flood Damage Restoration',zone:'north',feat:'the Platte River and KCI industrial area',lm:'Platte City downtown, Platte River, KCI industrial corridor',housing:'small-town homes and rural properties near the Platte River floodplain, where storm damage and river flooding are the primary water emergencies'},
+  {n:'KCI Industrial',z:'64164',area:'Platte City East / KCI Industrial',d:'Emergency Water Extraction',zone:'north',feat:'the KCI logistics corridor',lm:'KCI Industrial Park, Platte County logistics hub, I-29 corridor',housing:'large commercial and industrial buildings where roof area and flat-roof design concentrate rainwater, making fast extraction critical'},
+  {n:'North Platte',z:'64165',area:'North Platte / Dearborn South',d:'Storm &amp; Flood Damage Restoration',zone:'north',feat:'the Platte River valley',lm:'Platte River valley, Dearborn area, rural Platte County',housing:'rural and semi-rural properties in the Platte River valley, where storm damage and river flooding hit hard and response times from the city are longer'},
+  {n:'Ridgely',z:'64166',area:'Platte North / Ridgely',d:'Mold Remediation',zone:'north',feat:'the northern Platte County area',lm:'Ridgely community, northern Platte County, Iatan area',housing:'rural homes in the northernmost part of our service area, where high humidity, poor ventilation, and long periods between inspections allow mold to spread undetected'},
+  {n:'Kearney South',z:'64167',area:'Kearney South / Holt',d:'Storm &amp; Flood Damage Restoration',zone:'north',feat:'the southern Kearney and Holt area',lm:'Kearney south gateway, Holt community, Jesse James Farm area',housing:'growing suburban and rural properties on the metro edge, where severe weather passes through open terrain with minimal windbreak'},
 ];
 
 function kebab(s){ return s.toLowerCase().replace(/&amp;/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); }
@@ -142,6 +142,7 @@ const imgPool=['hero-flood.jpg','water-damage-room.jpg','ceiling-damage.jpg','pi
 const towns = AREAS.map((a,i)=>({
   name:a.n, slug:kebab(a.n)+'-mo-'+a.z, zip:a.z, area:a.area,
   zone:a.zone, feat:a.feat, demand:a.d,
+  lm:a.lm||'', housing:a.housing||'',
   img:imgPool[i%imgPool.length],
   loc: LOCATIONS.find(l=>l.id===a.zone),
 }));
@@ -782,38 +783,88 @@ ${ctaBand(s.ctaH, s.ctaP)}
 services.forEach(servicePage);
 
 // ---------- LOCATION PAGE (per zip area) ----------
-function locationPage(t){
+
+// anchor text variation pools for interlinking
+const waterAnchors = ['water damage restoration','emergency water extraction','water damage cleanup','professional water removal','24/7 water damage service'];
+const moldAnchors = ['mold remediation','professional mold removal','mold treatment','mold cleanup and prevention','mold inspection and removal'];
+const basementAnchors = ['flooded basement cleanup','basement water pump-out','basement flood restoration','emergency basement drying','basement flooding service'];
+const stormAnchors = ['storm damage restoration','storm and flood cleanup','severe weather damage repair','flood damage restoration','emergency storm response'];
+const sewageAnchors = ['sewage cleanup','sewage backup removal','biohazard cleanup','contaminated water cleanup','sewage and black water removal'];
+const fireAnchors = ['fire and smoke damage restoration','fire damage cleanup','smoke and soot removal','post-fire water damage cleanup','fire restoration service'];
+function pickAnchor(pool, seed){ return pool[Math.abs(seed)%pool.length]; }
+
+function locationPage(t, idx){
   const canonical = 'water-damage-restoration-'+t.slug;
   const near = t.nearby.map(n=>townBySlug[n]).filter(n=>n && n.live);
   const nearLinks = near.length ? near.map(n=>`<a href="${townUrl(n)}">${n.name} (${n.zip})</a>`).join(', ') : '<a href="/service-areas">surrounding Kansas City areas</a>';
   const place = `the ${t.area} area of Kansas City (${t.zip})`;
   const demandLower = t.demand.replace(/&amp;/g,'and').toLowerCase();
+  const demandPlain = t.demand.replace(/&amp;/g,'&');
   const introP = demandIntro(t, place);
   const ps = demandPS(t);
   const faqs = demandFAQs(t);
+  const s = idx||0;
 
+  // varied anchor texts per page
+  const aWater = pickAnchor(waterAnchors, s);
+  const aMold = pickAnchor(moldAnchors, s+1);
+  const aBasement = pickAnchor(basementAnchors, s+2);
+  const aStorm = pickAnchor(stormAnchors, s+3);
+  const aSewage = pickAnchor(sewageAnchors, s+4);
+  const aFire = pickAnchor(fireAnchors, s+5);
+
+  // sub-services with links to parent service pages
   const allSubs = [
-    {n:`Water Damage Restoration in ${t.name}`,d:'Emergency water extraction, structural drying, and complete property repair.',k:'water'},
-    {n:`Flooded Basement Cleanup in ${t.name}`,d:'Rapid pump-outs and drying for flooded basements and sump failures.',k:'basement'},
-    {n:`Mold Remediation in ${t.name}`,d:'Professional containment, removal, and treatment of mold from water damage.',k:'mold'},
-    {n:`Storm and Flood Damage in ${t.name}`,d:'Emergency response to roof leaks, wind-driven rain, and flooding.',k:'storm'},
-    {n:`Sewage Cleanup in ${t.name}`,d:'Safe removal and hospital-grade sanitizing of sewage backups.',k:'sewage'},
-    {n:`Fire and Smoke Damage in ${t.name}`,d:'Water, soot, and smoke odor cleanup after fires.',k:'fire'},
+    {n:`<a href="/water-damage-restoration">Water Damage Restoration</a> in ${t.name}`,d:`Emergency water extraction, structural drying, and complete property repair for ${t.name} homes near ${t.feat}.`,k:'water'},
+    {n:`<a href="/flooded-basement-cleanup">Flooded Basement Cleanup</a> in ${t.name}`,d:`Rapid pump-outs and thorough drying for flooded basements and sump failures in the ${t.area} area.`,k:'basement'},
+    {n:`<a href="/mold-remediation">Mold Remediation</a> in ${t.name}`,d:`Professional containment, safe removal, and antimicrobial treatment of mold caused by water damage in ${t.zip}.`,k:'mold'},
+    {n:`<a href="/storm-damage-restoration">Storm &amp; Flood Damage</a> in ${t.name}`,d:`Emergency response to roof leaks, wind-driven rain, and flash flooding near ${t.feat}.`,k:'storm'},
+    {n:`<a href="/sewage-cleanup">Sewage Cleanup</a> in ${t.name}`,d:`Safe removal and hospital-grade sanitizing of sewage backups and contaminated water in the ${t.area} area.`,k:'sewage'},
+    {n:`<a href="/fire-smoke-damage">Fire &amp; Smoke Damage</a> in ${t.name}`,d:`Water, soot, and smoke odor cleanup after fires for ${t.name} properties.`,k:'fire'},
   ];
   const km = {pipe:'water',basement:'basement',extract:'water',mold:'mold',storm:'storm',ceiling:'water',sewage:'sewage',drying:'water'};
   const lk = km[dCat(t.demand)]||'water';
-  const lead = allSubs.find(s=>s.k===lk);
-  const rest = allSubs.filter(s=>s.k!==lk);
+  const lead = allSubs.find(ss=>ss.k===lk);
+  const rest = allSubs.filter(ss=>ss.k!==lk);
   const subs = [lead,...rest];
 
   const areaMapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(t.name+', Kansas City, MO '+t.zip)}&z=13&output=embed`;
 
+  // landmarks list
+  const lmArr = t.lm ? t.lm.split(', ') : [];
+  const lmSection = lmArr.length ? `
+<section><div class="container">
+  <div class="section-head"><div class="eyebrow">${t.name} Landmarks</div><h2>Serving Homes &amp; Businesses Near</h2></div>
+  <div class="grid grid-3">${lmArr.map(l=>`<div class="card" style="text-align:center;padding:24px 16px"><span class="ico">${I.pin}</span><h3 style="font-size:1rem">${l}</h3></div>`).join('')}</div>
+  <p class="center muted" style="margin-top:20px">If you live or work near any of these ${t.name} landmarks and need <a href="/water-damage-restoration">${aWater}</a>, we can be there fast — usually within 45 minutes from our <a href="/locations">${t.loc.short} location</a>.</p>
+</div></section>` : '';
+
+  // unique housing/area-risk paragraph
+  const housingP = t.housing ? `<p>The ${t.name} area (zip code ${t.zip}) features ${t.housing}. This means <a href="/">${BIZ_NAME}</a> crews dispatched to ${t.name} need to be equipped for the specific challenges these properties present — and we are. Whether you need <a href="/flooded-basement-cleanup">${aBasement}</a> after groundwater intrusion, <a href="/mold-remediation">${aMold}</a> from lingering moisture, or <a href="/storm-damage-restoration">${aStorm}</a> after a severe weather event, our team knows the building types and common failure points in this part of Kansas City.</p>` : '';
+
+  // deep-link paragraph with varied anchors into service pages
+  const deepLinkP = `<p>As a full-service <a href="/">Kansas City water damage restoration company</a>, we handle the complete range of emergencies in ${t.name}: <a href="/water-damage-restoration">${aWater}</a> for burst pipes and appliance leaks, <a href="/flooded-basement-cleanup">${aBasement}</a> when rain or groundwater overwhelms your drainage, <a href="/mold-remediation">${aMold}</a> for moisture-related growth, <a href="/storm-damage-restoration">${aStorm}</a> from severe Kansas City weather, <a href="/sewage-cleanup">${aSewage}</a> when contaminated water enters your home, and <a href="/fire-smoke-damage">${aFire}</a> including the water damage firefighting leaves behind. We serve ${t.name} from our <a href="/locations">${t.loc.name} location</a> and cover <a href="/service-areas">50+ zip codes across Kansas City</a>.</p>`;
+
+  // nearby areas section with more context
+  const nearSection = near.length ? `
+<section><div class="container">
+  <div class="section-head"><div class="eyebrow">Nearby Areas</div><h2>We Also Serve These Areas Near ${t.name}</h2><p class="muted">Our ${t.loc.short} crew covers ${t.name} and all surrounding neighborhoods. Click any area below for local water damage details.</p></div>
+  <div class="grid grid-3">${near.map(n=>`<a class="card" href="${townUrl(n)}"><span class="ico">${I.pin}</span><h3>${n.name} (${n.zip})</h3><p>24/7 ${n.demand.replace(/&amp;/g,'&').toLowerCase()} and water damage cleanup.</p><span class="more">View ${n.name} →</span></a>`).join('')}</div>
+</div></section>` : '';
+
+  // BreadcrumbList schema
+  const breadcrumbLD = {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://"+DOMAIN+"/"},
+    {"@type":"ListItem","position":2,"name":"Service Areas","item":"https://"+DOMAIN+"/service-areas"},
+    {"@type":"ListItem","position":3,"name":t.name+" ("+t.zip+")","item":"https://"+DOMAIN+"/"+canonical}
+  ]};
+
   const body = `
 <section class="page-hero"><div class="container">
-  <div class="crumbs"><a href="/">Home</a> / <a href="/service-areas">Service Areas</a> / ${t.name} (${t.zip})</div>
-  <h1>Water Damage Restoration &amp; ${t.demand} in ${t.name}, Kansas City MO ${t.zip}</h1>
-  <p class="lead">24/7 emergency water damage, flood, and mold cleanup for ${t.name} homes and businesses — with ${demandLower} and fast local response from our ${t.loc.short} crew.</p>
-  <div style="margin-top:22px">${callBtn()}</div>
+  <div class="crumbs"><a href="/">Home</a> / <a href="/service-areas">Service Areas</a> / <a href="/locations">${t.loc.name}</a> / ${t.name} (${t.zip})</div>
+  <h1>${t.demand} &amp; Water Damage Restoration in ${t.name}, Kansas City MO ${t.zip}</h1>
+  <p class="lead">24/7 emergency ${demandLower}, water extraction, flood cleanup, and <a href="/mold-remediation" style="color:#fff;text-decoration:underline">mold remediation</a> for ${t.name} homes and businesses — fast local response from our <a href="/locations" style="color:#fff;text-decoration:underline">${t.loc.short} crew</a>. Serving all of <a href="/" style="color:#fff;text-decoration:underline">Kansas City, MO</a>.</p>
+  <div style="margin-top:22px">${callBtn('Call Now — '+PHONE_DISPLAY)}<a class="btn btn-ghost" href="/services" style="margin-left:12px">All Services</a></div>
 </div></section>
 
 <section class="loc-map-band"><div class="container" style="max-width:100%;padding:0">
@@ -822,38 +873,67 @@ function locationPage(t){
 
 <section><div class="container split">
   <div class="prose">
+    <h2>${demandPlain} for ${t.name} Properties (${t.zip})</h2>
     <p>${introP}</p>
-    <p>Our ${t.name} customers rely on us for complete <a href="/water-damage-restoration">water damage restoration</a> — from emergency <a href="/flooded-basement-cleanup">flooded basement cleanup</a> to <a href="/mold-remediation">mold remediation</a> and <a href="/storm-damage-restoration">storm damage recovery</a>. We also serve nearby ${nearLinks}, and you can see our full <a href="/service-areas">Kansas City coverage</a> or find us on our <a href="${GBP}" rel="nofollow noopener" target="_blank">Google Business Profile</a>.</p>
+    ${housingP}
+    ${deepLinkP}
   </div>
-  <div><img class="feature-img" src="/assets/${t.img}" alt="Water damage restoration in ${t.name}, Kansas City MO" loading="lazy"></div>
+  <div><img class="feature-img" src="/assets/${t.img}" alt="${demandPlain} and water damage restoration in ${t.name}, Kansas City MO ${t.zip}" loading="lazy"></div>
 </div></section>
 
-${subServicesSection(t.demand+' &amp; Restoration Services in '+t.name, subs)}
-${problemSolution(t.demand+' &amp; Other Problems We Fix in '+t.name, ps)}
-${processSection('How Our '+t.name+' Restoration Process Works')}
+${lmSection}
+${subServicesSection(t.demand+' &amp; Full Restoration Services in '+t.name+' ('+t.zip+')', subs)}
+${problemSolution(demandPlain+' &amp; Other Problems We Fix in '+t.name, ps)}
+${processSection('How We Restore '+t.name+' Properties After Water Damage')}
 ${whyChooseUs(t.name)}
-${aboutSection('We are a metro-wide Kansas City team with <a href="/locations">4 locations</a>, which is why we can respond so quickly to '+t.name+' emergencies.')}
 
-<section class="section-soft"><div class="container">
-  <div class="section-head"><div class="eyebrow">Find Us</div><h2>Serving ${t.name} From Our ${t.loc.short} Location</h2></div>
-  <iframe class="map-frame" src="${t.loc.mapEmbed}" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="${BIZ_NAME} serving ${t.name}, Kansas City MO"></iframe>
-  <p class="center muted" style="margin-top:18px">Nearby areas we serve: ${nearLinks} · <a href="/service-areas">All service areas</a> · <a href="/">Home</a></p>
+<section class="section-soft"><div class="container split">
+  <div class="prose">
+    <div class="eyebrow">Your Local Team</div>
+    <h2>Why ${t.name} Homeowners Trust ${BIZ_NAME}</h2>
+    <p>We are a metro-wide Kansas City team with <a href="/locations">4 locations</a> strategically placed across the city, which is why we can respond so quickly to ${t.name} emergencies. Our <a href="/locations">${t.loc.name} location</a> is the closest crew to the ${t.area} area, giving you faster response times than companies that dispatch from across town.</p>
+    <p>From initial <a href="/water-damage-restoration">${pickAnchor(waterAnchors, s+6)}</a> to final repairs, we handle every stage in-house — no subcontractors, no handoffs. We document the damage thoroughly for your insurance, and we can <a href="/contact">bill your insurer directly</a> so you are not stuck managing the claim alone. Our crews follow IICRC industry standards using commercial-grade equipment to ensure your ${t.name} property is dried properly, not just surface-dry.</p>
+    <p>See what other Kansas City homeowners say about us on our <a href="${GBP}" rel="nofollow noopener" target="_blank">Google Business Profile</a>, or explore all the <a href="/service-areas">neighborhoods we serve</a>.</p>
+    <p style="margin-top:22px">${callBtn()}</p>
+  </div>
+  <div><img class="feature-img" src="/assets/technician.jpg" alt="${BIZ_NAME} technician working in ${t.name}, Kansas City MO" loading="lazy"></div>
 </div></section>
 
-${faqSection(t.demand+' in '+t.name+' — FAQs', faqs)}
-${socialShare(canonical, 'Water Damage Restoration in '+t.name+', Kansas City MO')}
-${ctaBand('Water Damage in '+t.name+'? Call Now', 'We dispatch 24/7 to '+t.name+' and the surrounding Kansas City metro. Speak to a real person right now.')}
+<section class="section-navy"><div class="container">
+  <div class="section-head"><div class="eyebrow" style="color:var(--gold)">Find Us</div><h2 style="color:#fff">Serving ${t.name} (${t.zip}) From Our ${t.loc.short} Location</h2></div>
+  <iframe class="map-frame" src="${t.loc.mapEmbed}" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="${BIZ_NAME} ${t.loc.name} location serving ${t.name}, Kansas City MO ${t.zip}" style="border:3px solid rgba(255,255,255,.15);border-radius:12px"></iframe>
+  <p class="center" style="margin-top:18px;color:rgba(255,255,255,.8)"><strong>${t.loc.addr}</strong> · <a href="tel:${PHONE_TEL}" style="color:#fff;font-weight:700">${PHONE_DISPLAY}</a> · <a href="${t.loc.gbp}" rel="nofollow noopener" target="_blank" style="color:var(--gold)">Get directions →</a></p>
+</div></section>
+
+${nearSection}
+
+${faqSection(demandPlain+' in '+t.name+', Kansas City MO '+t.zip+' — FAQs', faqs)}
+
+<section><div class="container center">
+  <div class="eyebrow">Related Services for ${t.name}</div>
+  <div class="chips" style="justify-content:center;margin-top:14px">
+    <a href="/water-damage-restoration">Water Damage</a>
+    <a href="/mold-remediation">Mold Remediation</a>
+    <a href="/flooded-basement-cleanup">Basement Flooding</a>
+    <a href="/storm-damage-restoration">Storm Damage</a>
+    <a href="/sewage-cleanup">Sewage Cleanup</a>
+    <a href="/fire-smoke-damage">Fire Damage</a>
+  </div>
+  <p class="muted" style="margin-top:18px"><a href="/service-areas">All ${liveTowns.length} service areas</a> · <a href="/services">All services</a> · <a href="/">Kansas City water damage restoration homepage</a> · <a href="/about">About our team</a> · <a href="/contact">Contact us</a></p>
+</div></section>
+
+${socialShare(canonical, demandPlain+' in '+t.name+', Kansas City MO')}
+${ctaBand(demandPlain+' in '+t.name+'? Call Now — 24/7', 'We dispatch to '+t.name+' ('+t.zip+') and the surrounding Kansas City metro around the clock. Speak to a real person right now.')}
 `;
-  const demandPlain = t.demand.replace(/&amp;/g,'&');
   fs.writeFileSync(path.join(out,canonical+'.html'), shell({
-    title:`Water Damage Restoration ${t.name}, Kansas City MO ${t.zip} | ${t.demand} | ${PHONE_DISPLAY}`,
-    desc:`24/7 water damage restoration in ${t.name}, Kansas City MO (${t.zip}). ${demandPlain}, water extraction, mold remediation, and storm cleanup. Fast local response — call ${PHONE_DISPLAY}.`,
+    title:`${demandPlain} & Water Damage Restoration ${t.name}, Kansas City MO ${t.zip} | ${PHONE_DISPLAY}`,
+    desc:`24/7 ${demandLower} and water damage restoration in ${t.name}, Kansas City MO (${t.zip}). Water extraction, mold remediation, basement flooding, and storm cleanup near ${t.lm.split(', ')[0]||t.feat}. Fast local response — call ${PHONE_DISPLAY}.`,
     canonical, body,
-    ld:graph([serviceLD(demandPlain+' & Water Damage Restoration in '+t.name, `${demandPlain}, water damage restoration, flood cleanup, and mold remediation in ${t.name}, Kansas City MO.`, canonical), faqLD(faqs), localBusinessLD('https://'+DOMAIN+'/'+canonical, t.loc)])
+    ld:graph([serviceLD(demandPlain+' & Water Damage Restoration in '+t.name+' ('+t.zip+')', `${demandPlain}, water damage restoration, flood cleanup, and mold remediation in ${t.name}, Kansas City MO ${t.zip}. Serving ${t.lm}.`, canonical), faqLD(faqs), localBusinessLD('https://'+DOMAIN+'/'+canonical, t.loc), breadcrumbLD])
   }));
   console.log('wrote',canonical+'.html');
 }
-liveTowns.forEach(locationPage);
+liveTowns.forEach((t,i)=>locationPage(t,i));
 
 // ---------- HOME ----------
 (function home(){
