@@ -1,0 +1,24 @@
+{
+  "buildCommand": "node build-pages.js",
+  "outputDirectory": "dist",
+  "installCommand": "echo no-deps",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/publish",
+      "schedule": "0 8 * * *"
+    }
+  ]
+}
