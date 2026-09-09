@@ -292,6 +292,9 @@ function shell({title, desc, canonical, body, ld}){
 <link rel="canonical" href="https://${DOMAIN}/${canonical}">
 <meta name="theme-color" content="#0a2540">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/styles.css">
 <meta property="og:title" content="${title}">
 <meta property="og:description" content="${desc}">
