@@ -207,7 +207,7 @@ function renderHeader(){
     return `<div class="mega-col"><h5>${b} KC</h5>${items}${more}</div>`;
   }).join('');
   return `<header class="site-header"><div class="header-inner">
-    <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">${I.drop}</span><span class="brand-text"><b>KC Water Damage</b><span>Restoration Services</span></span></a>
+    <a class="brand" href="/"><img src="/assets/logo.png" alt="KC Water Damage Restoration Services" class="brand-logo"></a>
     <input type="checkbox" id="nav-toggle" class="nav-toggle">
     <label for="nav-toggle" class="nav-toggle-label" aria-label="Toggle menu"><span></span><span></span><span></span></label>
     <nav class="nav">
@@ -291,7 +291,7 @@ function shell({title, desc, canonical, body, ld}){
 <meta name="description" content="${desc}">
 <link rel="canonical" href="https://${DOMAIN}/${canonical}">
 <meta name="theme-color" content="#0a2540">
-<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/logo.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -300,7 +300,7 @@ function shell({title, desc, canonical, body, ld}){
 <meta property="og:description" content="${desc}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://${DOMAIN}/${canonical}">
-<meta property="og:image" content="https://${DOMAIN}/assets/hero-flood.jpg">
+<meta property="og:image" content="https://${DOMAIN}/assets/logo.png">
 ${ld ? `<script type="application/ld+json">${JSON.stringify(ld)}</script>` : ''}
 </head>
 <body>
@@ -989,7 +989,7 @@ liveTowns.forEach((t,i)=>locationPage(t,i));
     </ul>
     <p style="margin-top:22px"><a class="btn btn-green" href="tel:${PHONE_TEL}">Call for Immediate Help</a></p>
   </div>
-  <div><img class="feature-img" src="/assets/technician.jpg" alt="Water damage restoration technician working in a Kansas City home" loading="lazy"></div>
+  <div><img class="feature-img" src="/assets/van.png" alt="Kansas City MO Water Damage Restoration service van on location" loading="lazy"></div>
 </div></section>
 
 <section><div class="container"><div class="img-band">
@@ -1095,7 +1095,7 @@ ${socialShare('services', 'Water Damage Restoration Services')}
     <h2>Trained, Equipped, and Insured</h2>
     <p>Our crews follow IICRC industry standards and use commercial-grade extraction, drying, and sanitizing equipment for <a href="/water-damage-restoration">water damage restoration</a>, <a href="/mold-remediation">mold remediation</a>, and more. We are licensed and insured, and we document every job carefully so your insurance claim goes smoothly.</p>
   </div>
-  <div><img class="feature-img" src="/assets/technician.jpg" alt="Kansas City water damage restoration team" loading="lazy"></div>
+  <div><img class="feature-img" src="/assets/van.png" alt="Kansas City MO Water Damage Restoration service van" loading="lazy"></div>
 </div></section>
 
 ${problemSolution('What We Help People Through', [
