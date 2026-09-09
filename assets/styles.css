@@ -342,6 +342,12 @@ section{padding:64px 0}
 }
 .footer-call:hover{background:var(--red-dark);color:#fff;text-decoration:none}
 .footer-call svg{width:18px;height:18px;flex:0 0 18px}
+.footer-locations{border-top:1px solid rgba(255,255,255,.14);padding-top:24px;margin-bottom:26px}
+.footer-locations h4{color:#fff;font-size:1rem;margin-bottom:14px}
+.footer-loc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+@media(max-width:900px){.footer-loc-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.footer-loc-grid{grid-template-columns:1fr}}
+.footer-loc{font-size:.88rem;line-height:1.6;color:rgba(255,255,255,.85)}
 .footer-areas{border-top:1px solid rgba(255,255,255,.14);padding-top:24px;margin-bottom:26px}
 .footer-areas h4{color:#fff;font-size:1rem;margin-bottom:14px}
 .footer-areas .cols{columns:5;column-gap:22px}

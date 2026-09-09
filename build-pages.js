@@ -260,7 +260,11 @@ function renderFooter(){
       </div>
       <div><h4>Services</h4><ul><li><a href="/water-damage-restoration">Water Damage Restoration</a></li><li><a href="/mold-remediation">Mold Remediation</a></li><li><a href="/flooded-basement-cleanup">Flooded Basement Cleanup</a></li><li><a href="/storm-damage-restoration">Storm &amp; Flood Damage</a></li><li><a href="/sewage-cleanup">Sewage &amp; Biohazard</a></li><li><a href="/fire-smoke-damage">Fire &amp; Smoke Damage</a></li></ul></div>
       <div><h4>Company</h4><ul><li><a href="/">Home</a></li><li><a href="/about">About Us</a></li><li><a href="/services">All Services</a></li><li><a href="/service-areas">Service Areas</a></li><li><a href="/contact">Contact</a></li><li><a href="/locations">Our Locations</a></li></ul></div>
-      <div><h4>Contact</h4><ul><li>📞 <a href="tel:${PHONE_TEL}">${PHONE_DISPLAY}</a></li><li>📍 4 locations across Kansas City, MO</li><li>🕐 Open 24/7 — Emergency Service</li><li><a href="${GBP}" rel="nofollow noopener" target="_blank">Find us on Google →</a></li></ul></div>
+      <div><h4>Contact</h4><ul><li>📞 <a href="tel:${PHONE_TEL}">${PHONE_DISPLAY}</a></li><li>🕐 Open 24/7 — Emergency Service</li><li><a href="${GBP}" rel="nofollow noopener" target="_blank">Find us on Google →</a></li></ul></div>
+    </div>
+    <div class="footer-locations">
+      <h4>Our 4 Kansas City Locations</h4>
+      <div class="footer-loc-grid">${LOCATIONS.map(l=>`<div class="footer-loc"><strong><a href="/locations" style="color:#fff">${l.name}</a></strong><br>${l.addr}<br><a href="tel:${PHONE_TEL}" style="color:var(--gold)">${PHONE_DISPLAY}</a><br><a href="${l.gbp}" rel="nofollow noopener" target="_blank" style="color:rgba(255,255,255,.7);font-size:.85em">Get directions →</a></div>`).join('')}</div>
     </div>
     <div class="footer-areas">
       <h4>Service Areas We Cover</h4>
