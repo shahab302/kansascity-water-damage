@@ -167,7 +167,7 @@ const LAUNCH_BATCH = new Set([
   'westport-mo-64109','waldo-mo-64113','prospect-mo-64127',
 ]);
 let _di = -1;
-towns.forEach(t=>{ if(LAUNCH_BATCH.has(t.slug)){ t.pub=LAUNCH; } else { _di+=2; t.pub=addDays(LAUNCH,_di); } t.live = t.pub<=TODAY; });
+towns.forEach(t=>{ if(LAUNCH_BATCH.has(t.slug)){ t.pub=LAUNCH; } else { _di+=1; t.pub=addDays(LAUNCH,_di); } t.live = t.pub<=TODAY; });
 const liveTowns = towns.filter(t=>t.live);
 
 // ---------- services data ----------
@@ -221,9 +221,11 @@ function renderHeader(){
       </div>
       <div class="has-mega"><a class="megabtn" href="/service-areas" tabindex="0">Locations</a>
         <div class="mega mega-locations">
-          <div class="mega-head">Service Areas Across Kansas City</div>
+          <div class="mega-head">Our 4 Kansas City Locations</div>
+          <div class="mega-cols mega-loc-addrs">${LOCATIONS.map(l=>`<div class="mega-loc-card"><h5><a href="/locations">${l.name}</a></h5><small>${l.addr}</small><br><a href="tel:${PHONE_TEL}" style="font-weight:700">${PHONE_DISPLAY}</a></div>`).join('')}</div>
+          <div class="mega-head" style="margin-top:14px;font-size:.95rem">Service Areas by Zone</div>
           <div class="mega-cols two">${locCols}</div>
-          <div class="mega-foot"><a class="m-all" href="/service-areas">View all ${liveTowns.length} service areas →</a><a class="m-cta" href="tel:${PHONE_TEL}">${I.phone} ${PHONE_DISPLAY}</a></div>
+          <div class="mega-foot"><a class="m-all" href="/service-areas">View all ${liveTowns.length} service areas →</a><a class="m-all" href="/locations">Our locations →</a><a class="m-cta" href="tel:${PHONE_TEL}">${I.phone} ${PHONE_DISPLAY}</a></div>
         </div>
       </div>
       <a href="/about">About</a>
