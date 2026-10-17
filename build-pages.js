@@ -59,6 +59,85 @@ const primaryLoc = LOCATIONS.find(l=>l.primary);
 const GBP = primaryLoc.gbp;
 const MAP = primaryLoc.mapEmbed;
 
+// ---- Directions & landmarks by zone ----
+const DIRECTIONS = {
+  central: {
+    route: 'Take I-70 West or I-35 North depending on your starting point, both converge near the Crown Center and downtown core',
+    driveTime: '~30 mins',
+    landmarks: ['Power & Light District', 'Union Station', 'City Market (River Market)', 'Crown Center'],
+    mainRoads: ['I-70', 'I-35', 'I-670', 'Main Street'],
+    neighbors: ['Downtown Kansas City', 'Midtown', 'Westport', 'Hospital Hill'],
+  },
+  north: {
+    route: 'Take I-29 North or US-169 North from most northland neighborhoods to reach our Gladstone/North KC location near N Oak Trafficway and Vivion Road',
+    driveTime: '~25-35 mins',
+    landmarks: ['Zona Rosa Shopping Center', 'Worlds of Fun Amusement Park', 'Line Creek Park', 'Barry Road Commercial Strip'],
+    mainRoads: ['I-29', 'US-169', 'MO-152', 'Barry Road', 'Antioch Road'],
+    neighbors: ['Gladstone', 'North Kansas City', 'Northland', 'Pleasant Valley'],
+  },
+  south: {
+    route: 'Take I-435 South or head south on Wornall Road / Holmes Road toward the Hillcrest and Bannister area (South KC location)',
+    driveTime: '~30-40 mins',
+    landmarks: ['Indian Creek Trail', 'Waldo Business District (75th Street)', 'Tower Park', 'Trolley Track Trail'],
+    mainRoads: ['I-435', 'Wornall Road', 'Holmes Road', '75th Street', 'Bruce R. Watkins Drive'],
+    neighbors: ['Waldo', 'Raytown', 'Grandview', 'Hickman Mills'],
+  },
+  east: {
+    route: 'Take Blue Ridge Boulevard or US-50 (350 Highway) southeast to reach our Blue Ridge location near Arrowhead Stadium area',
+    driveTime: '~20-30 mins',
+    landmarks: ['Blue Ridge Crossing Shopping Center', 'Arrowhead & Kauffman Stadiums', 'Minor Park / Blue River', 'US-50 Corridor'],
+    mainRoads: ['Blue Ridge Boulevard', 'US-50 (350 Highway)', 'I-435', '40 Highway'],
+    neighbors: ['Blue Ridge', 'Raytown', 'Independence', 'Overland Park'],
+  },
+};
+
+function directionsSection(t) {
+  const d = DIRECTIONS[t.zone] || DIRECTIONS.central;
+  const loc = LOCATIONS.find(l => l.id === t.zone);
+  if (!loc) return '';
+
+  const origin = encodeURIComponent(t.name + ' Kansas City MO');
+  const dest = encodeURIComponent(loc.addr);
+  const mapsEmbed = `https://www.google.com/maps?saddr=${origin}&daddr=${dest}&output=embed`;
+  const mapsDir = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${dest}`;
+
+  return `
+<section><div class="container">
+  <div class="section-head"><div class="eyebrow">Directions & How to Reach Us</div><h2>Getting to Our ${loc.name} Crew</h2></div>
+  <div class="split" style="align-items:flex-start;gap:40px">
+    <div class="prose" style="flex:1">
+      <h3 style="margin-top:0">Route from ${t.name}</h3>
+      <p>${d.route} — approximately ${d.driveTime} from the ${t.name} area.</p>
+
+      <h3>Local Landmarks & Areas Near ${t.name}</h3>
+      <p>If you're near any of these ${t.name}-area landmarks, our crew can reach you quickly:</p>
+      <ul style="columns:2;margin:12px 0">${d.landmarks.map(lm => `<li>${lm}</li>`).join('')}</ul>
+
+      <h3>Address & Contact</h3>
+      <div style="background:var(--sky);padding:16px;border-radius:8px;margin:16px 0">
+        <p style="margin:0 0 8px 0"><strong>${loc.name}</strong></p>
+        <p style="margin:0 0 8px 0">${loc.addr}</p>
+        <p style="margin:0 0 8px 0"><strong>${PHONE_DISPLAY}</strong> — Call 24/7</p>
+        <p style="margin:0">Available round-the-clock for water emergencies</p>
+      </div>
+
+      <div style="display:flex;gap:12px;margin-top:20px">
+        <a href="${mapsDir}" class="btn btn-green" target="_blank" rel="noopener">Get Directions</a>
+        <a href="tel:${PHONE_TEL}" class="btn btn-red">Call Now</a>
+      </div>
+    </div>
+    <div style="flex:1">
+      <iframe src="${mapsEmbed}" width="100%" height="400" frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Directions to ${loc.name} from ${t.name}"></iframe>
+    </div>
+  </div>
+</div></section>
+
+<section class="section-soft"><div class="container">
+  <div class="section-head"><div class="eyebrow">Service Coverage</div><h2>Neighborhoods We Serve in ${t.name}</h2><p class="muted">We respond 24/7 across these ${t.name}-area neighborhoods and surrounding Kansas City regions.</p></div>
+  <div class="area-grid">${d.neighbors.map(n => `<span>${n}</span>`).join('')}</div>
+</div></section>`;
+}
+
 // ---------- icons ----------
 const I = {
   phone:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .7-.2 1l-2.3 2.2z"/></svg>',
@@ -811,7 +890,11 @@ function locationPage(t, idx){
   const demandPlain = t.demand.replace(/&amp;/g,'&');
   const introP = demandIntro(t, place);
   const ps = demandPS(t);
-  const faqs = demandFAQs(t);
+  let faqs = demandFAQs(t);
+  const d = DIRECTIONS[t.zone] || DIRECTIONS.central;
+  faqs = faqs.concat([
+    {q:`What neighborhoods in ${t.name}, ${t.zip} do you serve?`,a:`We provide 24/7 emergency water damage restoration and cleanup across all of ${t.name} and surrounding Kansas City neighborhoods, including: ${d.neighbors.join(', ')}. Our ${LOCATIONS.find(l=>l.id===t.zone).name} location serves this area with typical response times of ${d.driveTime}.`}
+  ]);
   const s = idx||0;
 
   // varied anchor texts per page
@@ -879,6 +962,8 @@ function locationPage(t, idx){
 <section class="loc-map-band"><div class="container" style="max-width:100%;padding:0">
   <iframe src="${areaMapSrc}" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Map of ${t.name}, Kansas City MO ${t.zip} — Water Damage Service Area"></iframe>
 </div></section>
+
+${directionsSection(t)}
 
 <section><div class="container split">
   <div class="prose">
